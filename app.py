@@ -1,26 +1,22 @@
-from dash import Dash, dcc, html, Input, Output
-import os
+from dash import Dash, dcc, html
+import plotly.express as px
+import pandas as pd
 
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+app = Dash(__name__)
 
-app = Dash(__name__, external_stylesheets=external_stylesheets)
+df = pd.read_csv('https://gist.githubusercontent.com/chriddyp/5d1ea79569ed194d432e56108a04d188/raw/a9f9e8076b837d541398e999dcbac2b2826a81f8/gdp-life-exp-2007.csv')
 
-server = app.server
+fig = px.scatter(df, x="gdp per capita", y="life expectancy",
+                 size="population", color="continent", hover_name="country",
+                 log_x=True, size_max=60)
 
 app.layout = html.Div([
-    html.H2('Hello World'),
-    dcc.Dropdown(['LA', 'NYC', 'MTL'],
-        'LA',
-        id='dropdown'
-    ),
-    html.Div(id='display-value')
+    dcc.Graph(
+        id='life-exp-vs-gdp',
+        figure=fig
+    )
 ])
-
-@app.callback(Output('display-value', 'children'),
-                [Input('dropdown', 'value')])
-def display_value(value):
-    return f'You have selected {value}'
 
 if __name__ == '__main__':
     app.run_server(debug=True)
