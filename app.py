@@ -20,4 +20,5 @@ app.layout = html.Div([
 ])
 
 if __name__ == '__main__':
-    app.run_server(host="0.0.0.0", port=$PORT)
+    port = int(os.environ.get('PORT', 8051))
+    app.run_server(host='0.0.0.0', port=port)
