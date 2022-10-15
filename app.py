@@ -1,4 +1,3 @@
-from msilib.schema import tables
 from dash import Dash, dcc, html, Input, Output
 import os
 import plotly.express as px
