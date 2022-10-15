@@ -193,7 +193,7 @@ def update_acc_chart(track, race_date, race_number, program_number):
         df_start = pd.read_csv('https://media.githubusercontent.com/media/marleen2511/horse-racing-dash/app/nyra_start_table.csv', sep=",")        
         df_start.columns =['track_id', 'race_date', 'race_number', 'program_number', 'weight_carried', 'jockey', 'odds', 'position_at_finish']
         df_start["program_number"] = pd.DataFrame([''.join(filter(str.isdigit, x)) for x in df_start['program_number']]).astype(str).astype(int)
-        df_start = df_start[df_start["track_id"].isin(list(track)) & df_start["race_date"].isin(list(race_date)) & df_start["race_number"].isin(list([race_number]))].reset_index(drop=True)
+        df_start = df_start[df_start["track_id"].isin(list(track)) & df_start["race_date"].isin(list(race_date)) & df_start["race_number"].isin(list(race_number))].reset_index(drop=True)
         
         df_plot = pd.DataFrame()
         df = df[df["track_id"] == track[0]]
