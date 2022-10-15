@@ -11,9 +11,6 @@ colors = {
     'text': 'white'
 }
 
-df = pd.read_csv('nyra_tracking_table.csv', sep=",")
-df[df["track_id"].isin(["AQU"]) & df["race_date"].isin(["2019-01-01", "2019-01-04", "2019-01-05", "2019-01-06", "2019-01-10"])].to_csv("nyra_tracking_table_2.csv", index=False) 
-
 
 df = pd.read_csv('https://media.githubusercontent.com/media/marleen2511/horse-racing-dash/app/nyra_tracking_table.csv', sep=",")
 df_start = pd.read_csv('https://media.githubusercontent.com/media/marleen2511/horse-racing-dash/app/nyra_start_table.csv', sep=",")
