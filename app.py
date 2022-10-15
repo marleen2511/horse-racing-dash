@@ -23,17 +23,17 @@ app.layout = html.Div([
                 html.Div([
                     html.Div([
                         html.H3(["Track ID"], id='dropdown-title-2'),
-                        dcc.Dropdown(df_start["track_id"].unique(), ["AQU"], multi=True,  placeholder="Select...", id="dropdown-1")], className="drop"),
+                        dcc.Dropdown(df_start["track_id"].unique(), "AQU", multi=False,  placeholder="Select...", id="dropdown-1")], className="drop"),
                     html.Div([
                         html.H3("Race Date", id='dropdown-title-3'),
-                        dcc.Dropdown([], ["2019-01-01"], id='dropdown-2', multi=True,  placeholder="Select...")], className="drop"),
+                        dcc.Dropdown("", "2019-01-01", id='dropdown-2', multi=False,  placeholder="Select...")], className="drop"),
                     html.Div([
                         html.H3(["Race Number"], id='dropdown-title-4'),
-                        dcc.Dropdown([], 1,
+                        dcc.Dropdown(1, 1,
                         id='dropdown-3', multi=False, placeholder="Select...")], className="drop"),
                     html.Div([
                         html.H3(["Program Number"], id='dropdown-title-5'),
-                        dcc.Dropdown([], [1],
+                        dcc.Dropdown([], 1,
                         id='dropdown-4', multi=True,  placeholder="Select...")], className="drop")
                     ], id="drop-1"),
                 html.Div([
@@ -95,7 +95,7 @@ app.layout = html.Div([
                         className='map',
                         id='map',
                     )], id="loader-5"))
-            ],  style={'margin': 'auto', 'height': '480vh', 'width': '100vw'})
+            ],  style={'margin': 'auto', 'height': '410vh', 'width': '100vw'})
 
 
 @app.callback(
@@ -105,21 +105,21 @@ def set_date_options(track):
     df_start = pd.read_csv('nyra_start_table.csv')    
     df_start.columns =['track_id', 'race_date', 'race_number', 'program_number', 'weight_carried', 'jockey', 'odds', 'position_at_finish']
     df_start["program_number"] = pd.DataFrame([''.join(filter(str.isdigit, x)) for x in df_start['program_number']]).astype(str).astype(int)
-    print([i for i in df_start[df_start["track_id"].isin(track)]["race_date"].unique()])
-    return [i for i in df_start[df_start["track_id"].isin(track)]["race_date"].unique()]
+    print([i for i in df_start[df_start["track_id"].isin([track])]["race_date"].unique()])
+    return [i for i in df_start[df_start["track_id"].isin([track])]["race_date"].unique()]
 
 @app.callback(
     Output("dropdown-2", "value"),
     Input("dropdown-2", "options"))
 def set_date_value(options_race_date):
-    return [options_race_date[0]]
+    return options_race_date[0]
 
 @app.callback(
     Output("dropdown-3", "options"),
     Input("dropdown-2", "value"),
     Input("dropdown-1", "value"))
 def set_number_options(race_date, track):
-    return df_start[df_start["track_id"].isin(list(track)) & df_start["race_date"].isin(list(race_date))]["race_number"].unique()
+    return df_start[df_start["track_id"].isin([track]) & df_start["race_date"].isin([race_date])]["race_number"].unique()
 
 @app.callback(
     Output("dropdown-3", "value"),
@@ -133,8 +133,8 @@ def set_number_value(options_race_number):
     Input("dropdown-2", "value"),
     Input("dropdown-1", "value"))
 def set_program_options(race_number, race_date, track):
-    race_number = [race_number]
-    return df_start[df_start["track_id"].isin(list(track)) & df_start["race_date"].isin(list(race_date)) & df_start["race_number"].isin(list(race_number))]["program_number"].unique()
+    print(race_number)
+    return df_start[df_start["track_id"].isin([track]) & df_start["race_date"].isin([race_date]) & df_start["race_number"].isin([race_number])]["program_number"].unique()
 
 @app.callback(
     Output("dropdown-4", "value"),
@@ -153,11 +153,12 @@ def set_program_value(options_program_number):
     Input("dropdown-2", "value"),
     Input("dropdown-1", "value"))
 def set_other_options(program_number, race_number, race_date, track):
-    race_number = [race_number]
-    return df_start[df_start["track_id"].isin(list(track)) & df_start["race_date"].isin(list(race_date)) & df_start["race_number"].isin(list(race_number))  & df_start["program_number"].isin(program_number)]["position_at_finish"].unique(),\
-    df_start[df_start["track_id"].isin(list(track)) & df_start["race_date"].isin(list(race_date)) & df_start["race_number"].isin(list(race_number))  & df_start["program_number"].isin(program_number)]["jockey"].unique(),\
-    df_start[df_start["track_id"].isin(list(track)) & df_start["race_date"].isin(list(race_date)) & df_start["race_number"].isin(list(race_number))  & df_start["program_number"].isin(program_number)]["weight_carried"].unique(),\
-    df_start[df_start["track_id"].isin(list(track)) & df_start["race_date"].isin(list(race_date)) & df_start["race_number"].isin(list(race_number))  & df_start["program_number"].isin(program_number)]["odds"].unique()
+    track = [track]
+    race_date = [race_date]
+    return df_start[df_start["track_id"].isin(track) & df_start["race_date"].isin(race_date) & df_start["race_number"].isin([race_number])  & df_start["program_number"].isin(program_number)]["position_at_finish"].unique(),\
+    df_start[df_start["track_id"].isin(track) & df_start["race_date"].isin(race_date) & df_start["race_number"].isin([race_number])  & df_start["program_number"].isin(program_number)]["jockey"].unique(),\
+    df_start[df_start["track_id"].isin(track) & df_start["race_date"].isin(race_date) & df_start["race_number"].isin([race_number])  & df_start["program_number"].isin(program_number)]["weight_carried"].unique(),\
+    df_start[df_start["track_id"].isin(track) & df_start["race_date"].isin(race_date) & df_start["race_number"].isin([race_number])  & df_start["program_number"].isin(program_number)]["odds"].unique()
 
 @app.callback(
     Output("dropdown-5", "value"),
@@ -183,6 +184,8 @@ def set_other_value(options_odds, options_weight, options_jockey, options_rankin
     Input("dropdown-4", "value"))
 def update_acc_chart(track, race_date, race_number, program_number):
     print([track, race_date, [race_number], program_number])
+    race_date = [race_date]
+    track = [track]
     race_number = [race_number]
     if ((len(track) > 0) & (len(race_date) > 0) & (len(str(race_number)) > 0) & (len(str(program_number)) > 0 )):
         df = pd.read_csv('nyra_tracking_table.csv')
@@ -192,34 +195,31 @@ def update_acc_chart(track, race_date, race_number, program_number):
         df_start = df_start[df_start["track_id"].isin(list(track)) & df_start["race_date"].isin(list(race_date)) & df_start["race_number"].isin(list([race_number]))].reset_index(drop=True)
         
         df_plot = pd.DataFrame()
-        for t in track:
-            df = df[df["track_id"] == t]
-            for rd in race_date: 
-                df = df[df["race_date"] == rd]
-                for rn in race_number:
-                    df = df[df["race_number"] == rn]
-                    df = df.groupby(["program_number"])
-                    lat = df["latitude"].apply(pd.DataFrame).reset_index(drop=True)
-                    long = df["longitude"].apply(pd.DataFrame).reset_index(drop=True)
-                    # average acceleration over horses
-                    lat_profile_race = pd.DataFrame()
-                    for i in lat.columns:
-                        lat_profile_race= lat_profile_race.assign(**{str(i): lat[:][i].dropna().reset_index(drop=True)})
-                    long_profile_race = pd.DataFrame()
-                    for i in long.columns:
-                        long_profile_race= long_profile_race.assign(**{str(i): long[:][i].dropna().reset_index(drop=True)})
-                    # take mean over horses => average of race
-                    lat_profile_race_mean = lat_profile_race.mean(axis=1)
-                    long_profile_race_mean = long_profile_race.mean(axis=1)
-                    for pn in program_number:
-                        difference_lat_profile = lat_profile_race.sub(lat_profile_race_mean, axis='index')
-                        difference_long_profile = long_profile_race.sub(long_profile_race_mean, axis='index')
-                        for i in range(0,len(difference_long_profile)-1):
-                            lat_profile_race.columns = [x.strip() for x in lat_profile_race.columns.tolist()]
-                            long_profile_race.columns = [x.strip() for x in long_profile_race.columns.tolist()]
-                            difference_lat_profile.columns = [x.strip() for x in difference_lat_profile.columns.tolist()]
-                            difference_long_profile.columns = [x.strip() for x in difference_long_profile.columns.tolist()]
-                            df_plot =  df_plot.append({"Time": i, "Program Number": str(pn), "Speed_mean": geopy.distance.distance([lat_profile_race_mean[i], long_profile_race_mean[i]],[lat_profile_race_mean[i+1], long_profile_race_mean[i+1]]).m/0.25, "Acceleration_mean": geopy.distance.distance([lat_profile_race_mean[i], long_profile_race_mean[i]],[lat_profile_race_mean[i+1], long_profile_race_mean[i+1]]).m/pow(0.25,2), "Lat": lat_profile_race[str(pn)][i], "Lon": long_profile_race[str(pn)][i], "Speed": geopy.distance.distance([difference_lat_profile[str(pn)][i], difference_long_profile[str(pn)][i]],[difference_lat_profile[str(pn)][i+1], difference_long_profile[str(pn)][i+1]]).m/0.25, "Acceleration": geopy.distance.distance([difference_lat_profile[str(pn)][i], difference_long_profile[str(pn)][i]],[difference_lat_profile[str(pn)][i+1], difference_long_profile[str(pn)][i+1]]).m/pow(0.25,2)}, ignore_index=True)
+        df = df[df["track_id"] == track[0]]
+        df = df[df["race_date"] == race_date[0]]
+        df = df[df["race_number"] == race_number[0]]
+        df = df.groupby(["program_number"])
+        lat = df["latitude"].apply(pd.DataFrame).reset_index(drop=True)
+        long = df["longitude"].apply(pd.DataFrame).reset_index(drop=True)
+        # average acceleration over horses
+        lat_profile_race = pd.DataFrame()
+        for i in lat.columns:
+            lat_profile_race= lat_profile_race.assign(**{str(i): lat[:][i].dropna().reset_index(drop=True)})
+        long_profile_race = pd.DataFrame()
+        for i in long.columns:
+            long_profile_race= long_profile_race.assign(**{str(i): long[:][i].dropna().reset_index(drop=True)})
+        # take mean over horses => average of race
+        lat_profile_race_mean = lat_profile_race.mean(axis=1)
+        long_profile_race_mean = long_profile_race.mean(axis=1)
+        for pn in program_number:
+            difference_lat_profile = lat_profile_race.sub(lat_profile_race_mean, axis='index')
+            difference_long_profile = long_profile_race.sub(long_profile_race_mean, axis='index')
+            for i in range(0,len(difference_long_profile)-1):
+                lat_profile_race.columns = [x.strip() for x in lat_profile_race.columns.tolist()]
+                long_profile_race.columns = [x.strip() for x in long_profile_race.columns.tolist()]
+                difference_lat_profile.columns = [x.strip() for x in difference_lat_profile.columns.tolist()]
+                difference_long_profile.columns = [x.strip() for x in difference_long_profile.columns.tolist()]
+                df_plot =  df_plot.append({"Time": i, "Program Number": str(pn), "Speed_mean": geopy.distance.distance([lat_profile_race_mean[i], long_profile_race_mean[i]],[lat_profile_race_mean[i+1], long_profile_race_mean[i+1]]).m/0.25, "Acceleration_mean": geopy.distance.distance([lat_profile_race_mean[i], long_profile_race_mean[i]],[lat_profile_race_mean[i+1], long_profile_race_mean[i+1]]).m/pow(0.25,2), "Lat": lat_profile_race[str(pn)][i], "Lon": long_profile_race[str(pn)][i], "Speed": geopy.distance.distance([difference_lat_profile[str(pn)][i], difference_long_profile[str(pn)][i]],[difference_lat_profile[str(pn)][i+1], difference_long_profile[str(pn)][i+1]]).m/0.25, "Acceleration": geopy.distance.distance([difference_lat_profile[str(pn)][i], difference_long_profile[str(pn)][i]],[difference_lat_profile[str(pn)][i+1], difference_long_profile[str(pn)][i+1]]).m/pow(0.25,2)}, ignore_index=True)
         for i, value in enumerate(df_plot.Speed_mean):
             if value > 20:
                    df_plot.Speed_mean[i] = df_plot.Speed_mean[i-1]

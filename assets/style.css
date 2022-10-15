@@ -1,0 +1,60 @@
+body {
+    background: #2C5364;  /* fallback for old browsers */
+}
+
+#title-1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    text-align: center;
+    margin-top: 10vh;
+}
+
+.drop{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#dropdown-title-2, #dropdown-title-3, #dropdown-title-4, #dropdown-title-5, #dropdown-title-6, #dropdown-title-7, #dropdown-title-8, #dropdown-title-9 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+
+#dropdown-1, #dropdown-5, #dropdown-title-2, #dropdown-title-6 {
+    margin-left: 10vw;
+}
+
+#dropdown-1, #dropdown-2, #dropdown-3, #dropdown-4, #dropdown-5, #dropdown-6, #dropdown-7 {
+    width: 15vw;
+    margin-right: 5vw;
+}
+
+#dropdown-4, #dropdown-8 {
+    width: 15vw;
+    margin-right: 10vw;
+}
+
+
+#drop-1, #drop-2  {
+    display: flex;
+    margin-bottom: 5vh;
+}
+
+.graph {
+
+    background: rgba(32,58,67, 0.3);
+    border-radius: 10px;
+    width: 80vw;
+    margin-top: 5vh;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+
+.map {
+    background: rgba(32,58,67, 0.3);
+    border-radius: 10px;
+    width: 80vw;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
