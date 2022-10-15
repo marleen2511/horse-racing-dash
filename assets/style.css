@@ -11,6 +11,7 @@ body {
 
 .drop{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
 }
 
 #dropdown-title-2, #dropdown-title-3, #dropdown-title-4, #dropdown-title-5, #dropdown-title-6, #dropdown-title-7, #dropdown-title-8, #dropdown-title-9 {
@@ -23,14 +24,9 @@ body {
     margin-left: 10vw;
 }
 
-#dropdown-1, #dropdown-2, #dropdown-3, #dropdown-4, #dropdown-5, #dropdown-6, #dropdown-7 {
-    width: 15vw;
-    margin-right: 5vw;
-}
-
-#dropdown-4, #dropdown-8 {
-    width: 15vw;
-    margin-right: 10vw;
+#dropdown-1, #dropdown-2, #dropdown-3, #dropdown-4, #dropdown-5, #dropdown-6, #dropdown-7, #dropdown-8 {
+    width: 18vw;
+    margin-right: 2.6vw;
 }
 
 
