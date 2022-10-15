@@ -11,8 +11,8 @@ colors = {
     'text': 'white'
 }
 
-df = pd.read_csv('https://github.com/marleen2511/horse-racing-dash/blob/50407d5091aee3ff6702f34fd075a88402cd9572/nyra_tracking_table.csv')
-df_start = pd.read_csv('https://github.com/marleen2511/horse-racing-dash/blob/50407d5091aee3ff6702f34fd075a88402cd9572/nyra_start_table.csv')
+df = pd.read_csv('nyra_tracking_table.csv')
+df_start = pd.read_csv('nyra_start_table.csv')
 df_start.columns =['track_id', 'race_date', 'race_number', 'program_number', 'weight_carried', 'jockey', 'odds', 'position_at_finish']
 df_start["program_number"] = pd.DataFrame([''.join(filter(str.isdigit, x)) for x in df_start['program_number']]).astype(str).astype(int)
 
@@ -102,7 +102,7 @@ app.layout = html.Div([
     Output("dropdown-2", "options"),
     Input("dropdown-1", "value"))
 def set_date_options(track):
-    df_start = pd.read_csv('https://github.com/marleen2511/horse-racing-dash/blob/50407d5091aee3ff6702f34fd075a88402cd9572/nyra_start_table.csv')
+    df_start = pd.read_csv('nyra_start_table.csv')    
     df_start.columns =['track_id', 'race_date', 'race_number', 'program_number', 'weight_carried', 'jockey', 'odds', 'position_at_finish']
     df_start["program_number"] = pd.DataFrame([''.join(filter(str.isdigit, x)) for x in df_start['program_number']]).astype(str).astype(int)
     print([i for i in df_start[df_start["track_id"].isin(track)]["race_date"].unique()])
@@ -185,8 +185,8 @@ def update_acc_chart(track, race_date, race_number, program_number):
     print([track, race_date, [race_number], program_number])
     race_number = [race_number]
     if ((len(track) > 0) & (len(race_date) > 0) & (len(str(race_number)) > 0) & (len(str(program_number)) > 0 )):
-        df = pd.read_csv('https://github.com/marleen2511/horse-racing-dash/blob/50407d5091aee3ff6702f34fd075a88402cd9572/nyra_tracking_table.csv')
-        df_start = pd.read_csv('https://github.com/marleen2511/horse-racing-dash/blob/50407d5091aee3ff6702f34fd075a88402cd9572/nyra_start_table.csv')
+        df = pd.read_csv('nyra_tracking_table.csv')
+        df_start = pd.read_csv('nyra_start_table.csv')
         df_start.columns =['track_id', 'race_date', 'race_number', 'program_number', 'weight_carried', 'jockey', 'odds', 'position_at_finish']
         df_start["program_number"] = pd.DataFrame([''.join(filter(str.isdigit, x)) for x in df_start['program_number']]).astype(str).astype(int)
         df_start = df_start[df_start["track_id"].isin(list(track)) & df_start["race_date"].isin(list(race_date)) & df_start["race_number"].isin(list([race_number]))].reset_index(drop=True)
