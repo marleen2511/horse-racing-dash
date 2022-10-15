@@ -279,5 +279,5 @@ def update_acc_chart(track, race_date, race_number, program_number):
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8050))
+    port = int(os.environ.get('PORT', 8051))
     app.run_server(host='0.0.0.0', port=port)
