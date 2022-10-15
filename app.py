@@ -13,6 +13,7 @@ colors = {
 
 df = pd.read_csv('nyra_tracking_table.csv')
 df_start = pd.read_csv('nyra_start_table.csv')
+print(df_start)
 df_start.columns =['track_id', 'race_date', 'race_number', 'program_number', 'weight_carried', 'jockey', 'odds', 'position_at_finish']
 df_start["program_number"] = pd.DataFrame([''.join(filter(str.isdigit, x)) for x in df_start['program_number']]).astype(str).astype(int)
 
